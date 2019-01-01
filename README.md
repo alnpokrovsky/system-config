@@ -1,5 +1,7 @@
 ### Vim config for web development
 
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
 <img src="http://i.imgur.com/ElOEHZ3.png"/>
 
 ### Features

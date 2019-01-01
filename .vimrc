@@ -64,17 +64,11 @@ NeoBundle 'vim-scripts/tlib'
 " and much more
 NeoBundle 'Shougo/unite.vim'
 
-" Snippet engine
-NeoBundle 'SirVer/ultisnips'
-
 " Default snippets
 NeoBundle 'honza/vim-snippets'
 
 " Dirr diff
 NeoBundle 'vim-scripts/DirDiff.vim'
-
-" Colorscheme solarazied for vim
-NeoBundle 'altercation/vim-colors-solarized'
 
 " Allow autoclose paired characters like [,] or (,),
 " and add smart cursor positioning inside it,
@@ -188,19 +182,6 @@ NeoBundle 'othree/javascript-libraries-syntax.vim'
 " Most recent files source for unite
 NeoBundle 'Shougo/neomru.vim'
 
-" Autocompletion engine
-NeoBundle 'Valloric/YouCompleteMe', {
-     \ 'build' : {
-     \     'unix' : './install.sh --js-completer && git submodule update --init --recursive',
-     \     'windows' : './install.sh --js-completer && git submodule update --init --recursive',
-     \     'cygwin' : './install.sh  --js-completer && git submodule update --init --recursive'
-     \    }
-     \ }
-" uses globally installed typescript for compeltion
-if isNpmInstalled && !executable('tsc')
-    silent ! echo 'Installing typescript' && npm install -g typescript
-endif
-
 " Yank history for unite
 NeoBundle 'Shougo/neoyank.vim'
 
@@ -240,25 +221,6 @@ NeoBundleCheck
 
 "--------------------------------------------------
 " Bundles settings
-
-"-------------------------
-" ultsnips
-
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-let g:UltiSnipsExpandTrigger="<nop>"
-let g:ulti_expand_or_jump_res = 0
-
-" Smart snippet expanding on CR
-function! <SID>ExpandSnippetOrReturn()
-  let snippet = UltiSnips#ExpandSnippetOrJump()
-  if g:ulti_expand_or_jump_res > 0
-    return snippet
-  else
-    return "\<CR>"
-  endif
-endfunction
-inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
 
 "-------------------------
 " Unite
@@ -463,18 +425,6 @@ nmap <leader>rr :YcmCompleter RefactorRename
 
 " Map jk to escape
 call arpeggio#map('i', '', 0, 'jk', '<ESC>')
-
-"--------------------------------------------------
-" Colorscheme
-
-" Use solarized colorscheme
-colorscheme solarized
-
-" Setting up light color scheme
-set background=light
-
-" Set highlighting for colorcolumn
-highlight ColorColumn ctermbg=lightGrey
 
 "--------------------------------------------------
 " General options
@@ -702,9 +652,6 @@ set noswapfile
 
 " Do not add eol at the end of file.
 set noeol
-
-" Spellcheck
-set spell spelllang=en_us
 
 "--------------------------------------------------
 " Diff Options
