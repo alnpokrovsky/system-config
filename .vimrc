@@ -567,14 +567,14 @@ set expandtab
 set smarttab
 
 " Number of spaces to use for each step of indent
-set shiftwidth=2
+set shiftwidth=4
 
 " Number of spaces that a Tab in the file counts for
-set tabstop=2
+set tabstop=4
 
 " Same but for editing operation (not sure what exactly does it means)
 " but in most cases tabstop and softtabstop better be the same
-set softtabstop=2
+set softtabstop=4
 
 " Round indent to multiple of 'shiftwidth'.
 " Indentation always be multiple of shiftwidth
