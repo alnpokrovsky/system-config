@@ -1,3 +1,7 @@
+### Oh my Zsh!
+
+curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+
 ### Vim config for web development
 
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
