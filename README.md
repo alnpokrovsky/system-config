@@ -1,6 +1,7 @@
 ### Oh my Zsh!
 
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+chsh -s $(which zsh)
 
 ### Vim config for web development
 
