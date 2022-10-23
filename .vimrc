@@ -44,17 +44,6 @@ endif
 " Let NeoNeoBundle manage NeoNeoBundle
 NeoBundle 'Shougo/neobundle.vim'
 
-" Install vimrpoc. is uses by unite and neocomplcache
-" for async searches and calls
-NeoBundle 'Shougo/vimproc', {
-\ 'build' : {
-\     'mac' : 'make -f make_mac.mak',
-\     'unix': g:make
-\    },
-\ }
-
-" Some support functions used by delimitmate, and snipmate
-NeoBundle 'vim-scripts/tlib'
 
 " Improve bookmarks in vim
 " Allow word for bookmark marks, and nice quickfix window with bookmark list
@@ -74,12 +63,6 @@ NeoBundle 'vim-scripts/DirDiff.vim'
 " and add smart cursor positioning inside it,
 NeoBundle 'Raimondi/delimitMate'
 
-" Add code static check on write
-" need to be properly configured.
-" I just enable it, with default config,
-" many false positive but still useful
-" NeoBundle 'scrooloose/syntastic'
-NeoBundle 'w0rp/ale'
 
 " Install jshint and stylelint for syntastic
 " Path to jshint if it not installed, then use local installation
@@ -286,21 +269,6 @@ let NERDTreeMinimalUI=1
 " Display current file in the NERDTree ont the left
 nmap <silent> <leader>f :NERDTreeFind<CR>
 
-"-------------------------
-" Ale
-"
-
-" Always open sign column, it's annoying if its jumping
-let g:ale_sign_column_always = 1
-
-let g:ale_sign_error = '😱'
-let g:ale_sign_warning = '😨'
-
-" Integrate Ale in airline
-let g:airline#extensions#ale#enabled = 1
-
-nmap <silent> [ <Plug>(ale_previous_wrap)
-nmap <silent> ] <Plug>(ale_next_wrap)
 
 "-------------------------
 " Fugitive
@@ -401,9 +369,6 @@ let g:ycm_filepath_blacklist = {
     \ 'html': 1,
     \ 'xml': 1
     \}
-
-" Since we use ale already
-let g:ycm_show_diagnostics_ui = 0
 
 " Go to type definition/declaration
 nmap <silent> <leader>td :YcmCompleter GoTo<CR>
@@ -633,103 +598,104 @@ nmap <space> za
 " Allow backspace to remove indents, newlines and old text
 set backspace=indent,eol,start
 
-" toggle paste mode on \p
-set pastetoggle=<leader>p
-
-" Add '-' as recognized word symbol. e.g dw delete all 'foo-bar' instead just 'foo'
-set iskeyword+=-
-
-" Disable backups file
-set nobackup
-
-" Disable vim common sequence for saving.
-" By default vim write buffer to a new file, then delete original file
-" then rename the new file.
-set nowritebackup
-
-" Disable swp files
-set noswapfile
-
-" Do not add eol at the end of file.
-set noeol
-
-"--------------------------------------------------
-" Diff Options
-
-" Display filler
-set diffopt=filler
-
-" Open diff in horizontal buffer
-set diffopt+=horizontal
-
-" Ignore changes in whitespaces characters
-set diffopt+=iwhite
-
-"--------------------------------------------------
-" Hotkeys
-
-" Open new tab
-nmap <silent><leader>to :tabnew .<CR>
-
-" Replace
-nmap <leader>s :%s//<left>
-vmap <leader>s :s//<left>
-
-" Moving between splits
-nmap <leader>w <C-w>w
-
-"--------------------------------------------------
-" Autocmd
-
-" It executes specific command when specific events occured
-" like reading or writing file, or open or close buffer
-if has("autocmd")
-    " Define group of commands,
-    " Commands defined in .vimrc don't bind twice if .vimrc will reload
-    augroup vimrc
-    " Delete any previously defined autocommands
-    au!
-        " Auto reload vim after your change it
-        au BufWritePost *.vim source $MYVIMRC | AirlineRefresh
-        au BufWritePost .vimrc source $MYVIMRC | AirlineRefresh
-
-        " Restore cursor position :help last-position-jump
-        au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+" toggle paste mode on 
+" set pastetoggle=<leader>p
+"
+" " Add '-' as recognized word symbol. e.g dw delete all 'foo-bar' instead just 'foo'
+" set iskeyword+=-
+"
+" " Disable backups file
+" set nobackup
+"
+" " Disable vim common sequence for saving.
+" " By default vim write buffer to a new file, then delete original file
+" " then rename the new file.
+" set nowritebackup
+"
+" " Disable swp files
+" set noswapfile
+"
+" " Do not add eol at the end of file.
+" set noeol
+"
+" "--------------------------------------------------
+" " Diff Options
+"
+" " Display filler
+" set diffopt=filler
+"
+" " Open diff in horizontal buffer
+" set diffopt+=horizontal
+"
+" " Ignore changes in whitespaces characters
+" set diffopt+=iwhite
+"
+" "--------------------------------------------------
+" " Hotkeys
+"
+" " Open new tab
+" nmap <silent><leader>to :tabnew .<CR>
+"
+" " Replace
+" nmap <leader>s :%s//<left>
+" vmap <leader>s :s//<left>
+"
+" " Moving between splits
+" nmap <leader>w <C-w>w
+"
+" "--------------------------------------------------
+" " Autocmd
+"
+" " It executes specific command when specific events occured
+" " like reading or writing file, or open or close buffer
+" if has("autocmd")
+"     " Define group of commands,
+"         " Commands defined in .vimrc don't bind twice if .vimrc will reload
+"             augroup vimrc
+"                 " Delete any previously defined autocommands
+"                     au!
+"                             " Auto reload vim after your change it
+"                                     au BufWritePost *.vim source $MYVIMRC | AirlineRefresh
+"                                             au BufWritePost .vimrc source $MYVIMRC | AirlineRefresh
+"
+"                                                     " Restore cursor position :help last-position-jump
+"                                                             au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
           \| exe "normal g'\"" | endif
 
         " Set filetypes aliases
-        au FileType htmldjango set ft=html.htmldjango
-        au FileType scss set ft=scss.css
-        au FileType less set ft=less.css
-        au BufWinEnter * if line2byte(line("$") + 1) > 100000 | syntax clear | endif
-        au BufRead,BufNewFile *.js set ft=javascript.javascript-jquery
-        au BufRead,BufNewFile *.json set ft=json
-        " Execute python \ -mjson.tool for autoformatting *.json
-        au BufRead,BufNewFile *.bemhtml set ft=javascript
-        au BufRead,BufNewFile *.bemtree set ft=javascript
-        au BufRead,BufNewFile *.xjst set ft=javascript
-        au BufRead,BufNewFile *.tt2 set ft=tt2
-        au BufRead,BufNewFile *.plaintex set ft=plaintex.tex
+        "         au FileType htmldjango set ft=html.htmldjango
+        "                 au FileType scss set ft=scss.css
+        "                         au FileType less set ft=less.css
+        "                                 au BufWinEnter * if line2byte(line("$") + 1) > 100000 | syntax clear | endif
+        "                                         au BufRead,BufNewFile *.js set ft=javascript.javascript-jquery
+        "                                                 au BufRead,BufNewFile *.json set ft=json
+        "                                                         " Execute python \ -mjson.tool for autoformatting *.json
+        "                                                                 au BufRead,BufNewFile *.bemhtml set ft=javascript
+        "                                                                         au BufRead,BufNewFile *.bemtree set ft=javascript
+        "                                                                                 au BufRead,BufNewFile *.xjst set ft=javascript
+        "                                                                                         au BufRead,BufNewFile *.tt2 set ft=tt2
+        "                                                                                                 au BufRead,BufNewFile *.plaintex set ft=plaintex.tex
+        "
+        "                                                                                                         " Auto close preview window, it uses with tags,
+        "                                                                                                                 " I don't use it
+        "                                                                                                                         autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+        "                                                                                                                                 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+        "
+        "                                                                                                                                         " Enable omni completion.
+        "                                                                                                                                                 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        "                                                                                                                                                         autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        "                                                                                                                                                                 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        "                                                                                                                                                                         autocmd FileType typescript setlocal omnifunc=typescriptcomlete#CompleteTS
+        "
+        "                                                                                                                                                                                 " Disable vertical line at max string length in NERDTree
+        "                                                                                                                                                                                         autocmd FileType * setlocal colorcolumn=+1
+        "                                                                                                                                                                                                 autocmd FileType nerdtree setlocal colorcolumn=""
 
-        " Auto close preview window, it uses with tags,
-        " I don't use it
-        autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-        " Enable omni completion.
-        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType typescript setlocal omnifunc=typescriptcomlete#CompleteTS
-
-        " Disable vertical line at max string length in NERDTree
-        autocmd FileType * setlocal colorcolumn=+1
-        autocmd FileType nerdtree setlocal colorcolumn=""
-
-        " Not enable Folding - it really slow on large files, uses plugin vim-javascript-syntax
-        " au FileType javascript* call JavaScriptFold()
-
-    " Group end
-    augroup END
-
-endif
+                " Not enable Folding - it really slow on large files, uses plugin vim-javascript-syntax
+                "         " au FileType javascript* call JavaScriptFold()
+                "
+                "             " Group end
+                "                 augroup END
+                "
+                "                 endif
+                "
