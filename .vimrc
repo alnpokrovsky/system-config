@@ -385,12 +385,6 @@ nmap <silent> <leader>gd :YcmCompleter GetDoc<CR>
 " Refactor smart rename, space at the end are important :)
 nmap <leader>rr :YcmCompleter RefactorRename 
 
-"-------------------------
-" Arpeggio
-
-" Map jk to escape
-call arpeggio#map('i', '', 0, 'jk', '<ESC>')
-
 "--------------------------------------------------
 " General options
 
